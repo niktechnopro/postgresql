@@ -23,8 +23,7 @@ var config = {
 
 var pool = new pg.Pool(config);//new pool of clients according to config
 // console.log(pool)
-var myClient // to store the client we get from database
-pool.connect(function(error, client, done){
+pool.connect(function(error){
 	if(error){
 		console.log("error connecting to database ",error)
 	}else{
@@ -33,15 +32,21 @@ pool.connect(function(error, client, done){
 })
 
 
-var ageQuery = format('SELECT * from numbers');
-pool.query(ageQuery, function(error, result){
-	if(error){
-		console.log(error)
-	}else{
-		console.log(result.rows[0].age)
-	}
-})
+app.get('*', (req, res)=>{
+	var ageQuery = format('SELECT * from numbers');
+	pool.query(ageQuery, function(error, result){
+		if(error){
+			console.log(error)
+		}else{
+			let numbers = result.rows.map((age)=>{return age.age})
+			console.log(numbers)
+			res.status(200).send({
+				message: `first read from DB ${PGDATABASE} is ${numbers}`
 
+			})
+		}
+	})
+})
 
 
 
