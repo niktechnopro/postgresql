@@ -1,0 +1,15 @@
+const path = require('path');
+
+module.exports = {
+	"config": path.resolve('./server/config', 'config.json'),
+	"models-path": path.resolve('./server/models'),
+	"seeders-path": path.resolve('./server/seeders'),
+	"migrations-path": path.resolve('./server/migrations')
+}
+
+
+// to install sequelize package we use
+// npm install --save sequelize pg pg-hstore
+// pg is responsible for creating database connection
+// while pg-hstore is a module for serializing and deserializing JSON data into the Postgres hstore format
+// then run sequelize init to generate boilerplate with above directories
